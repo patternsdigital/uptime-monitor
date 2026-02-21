@@ -23,18 +23,18 @@
     "icon": "https://icons.duckduckgo.com/ip3/fieldforhumanity.org.ico",
     "slug": "field-for-humanity",
     "status": "up",
-    "uptime": "99.98%",
-    "uptimeDay": "99.98%",
-    "uptimeWeek": "99.98%",
-    "uptimeMonth": "99.98%",
-    "uptimeYear": "99.98%",
-    "time": 388,
-    "timeDay": 388,
-    "timeWeek": 388,
-    "timeMonth": 388,
-    "timeYear": 388,
+    "uptime": "94.13%",
+    "uptimeDay": "94.13%",
+    "uptimeWeek": "94.13%",
+    "uptimeMonth": "94.13%",
+    "uptimeYear": "94.13%",
+    "time": 350,
+    "timeDay": 350,
+    "timeWeek": 350,
+    "timeMonth": 350,
+    "timeYear": 350,
     "dailyMinutesDown": {
-      "2026-02-21": 0
+      "2026-02-21": 34
     }
   },
   {
@@ -42,18 +42,20 @@
     "url": "https://deomusisi.com",
     "icon": "https://icons.duckduckgo.com/ip3/deomusisi.com.ico",
     "slug": "deomusisi",
-    "status": "down",
-    "uptime": "100.00%",
-    "uptimeDay": "100.00%",
-    "uptimeWeek": "100.00%",
-    "uptimeMonth": "100.00%",
-    "uptimeYear": "100.00%",
-    "time": 296,
-    "timeDay": 296,
-    "timeWeek": 296,
-    "timeMonth": 296,
-    "timeYear": 296,
-    "dailyMinutesDown": {}
+    "status": "up",
+    "uptime": "94.13%",
+    "uptimeDay": "94.13%",
+    "uptimeWeek": "94.13%",
+    "uptimeMonth": "94.13%",
+    "uptimeYear": "94.13%",
+    "time": 389,
+    "timeDay": 389,
+    "timeWeek": 389,
+    "timeMonth": 389,
+    "timeYear": 389,
+    "dailyMinutesDown": {
+      "2026-02-21": 34
+    }
   },
   {
     "name": "Oxycare Uganda",
@@ -72,7 +74,7 @@
     "timeMonth": 225,
     "timeYear": 225,
     "dailyMinutesDown": {
-      "2026-02-21": 552
+      "2026-02-21": 586
     }
   }
 ]
