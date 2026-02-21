@@ -1,36 +1,83 @@
 # Change these first
-owner: upptime # Your GitHub organization or username, where this repository lives
-repo: upptime # The name of this repository
+owner: patternsdigital # Your GitHub organization or username, where this repository lives
+repo: uptime-monitor # The name of this repository
 
 sites:
-  - name: Google
-    url: https://www.google.com
-  - name: Wikipedia
-    url: https://en.wikipedia.org
-  - name: Hacker News
-    url: https://news.ycombinator.com
-  - name: Test Broken Site
-    url: https://thissitedoesnotexist.koj.co
-  - name: IPv6 test
-    url: forwardemail.net
-    port: 80
-    check: "tcp-ping"
-    ipv6: true
+  - name: Patterns Digital
+    url: https://patternsdigital.com
+  - name: Field for Humanity
+    url: https://fieldforhumanity.org
+  - name: Deomusisi
+    url: https://deomusisi.com
+  - name: Oxycare Uganda
+    url: https://oxycareug.org
 
 status-website:
   # Add your custom domain name, or remove the `cname` line if you don't have a domain
   # Uncomment the `baseUrl` line if you don't have a custom domain and add your repo name there
-  cname: demo.upptime.js.org
+  cname: status.patternsdigital.com
   # baseUrl: /your-repo-name
   logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
-  name: Upptime
-  introTitle: "**Upptime** is the open-source uptime monitor and status page, powered entirely by GitHub."
-  introMessage: This is a sample status page which uses **real-time** data from our [GitHub repository](https://github.com/upptime/upptime). No server required — just GitHub Actions, Issues, and Pages. [**Get your own for free**](https://github.com/upptime/upptime)
+  name: Patterns Digital Status
+  introTitle: "**Patterns Digital** Status Monitor"
+  introMessage: Real-time monitoring and status updates for Patterns Digital and partner websites. All data is powered by automated checks running every 5 minutes.
   navbar:
     - title: Status
       href: /
     - title: GitHub
       href: https://github.com/$OWNER/$REPO
+    - title: Patterns Digital
+      href: https://patternsdigital.com
 
-# Upptime also supports notifications, assigning issues, and more
-# See https://upptime.js.org/docs/configuration
+# Mailgun notification configuration
+notifications:
+  - type: custom
+    name: mailgun
+    check: "status-change"
+    sendNotification: |
+      const axios = require("axios");
+      const FormData = require("form-data");
+      
+      const form = new FormData();
+      form.append("from", "Patterns Digital Status <status@patternsdigital.com>");
+      form.append("to", process.env.NOTIFICATION_EMAILS);
+      form.append("subject", `🚨 ${process.env.SITE_NAME} is ${process.env.SITE_STATUS}`);
+      form.append("text", `
+        Site: ${process.env.SITE_NAME}
+        Status: ${process.env.SITE_STATUS}
+        URL: ${process.env.SITE_URL}
+        Time: ${new Date().toISOString()}
+        
+        ${process.env.SITE_STATUS === "down" ? "⚠️ Immediate attention required!" : "✅ Service restored"}
+      `);
+      form.append("html", `
+        <h2>Status Update: ${process.env.SITE_NAME}</h2>
+        <p><strong>Status:</strong> ${process.env.SITE_STATUS === "down" ? "🔴 DOWN" : "🟢 UP"}</p>
+        <p><strong>URL:</strong> <a href="${process.env.SITE_URL}">${process.env.SITE_URL}</a></p>
+        <p><strong>Time:</strong> ${new Date().toISOString()}</p>
+        <hr>
+        ${process.env.SITE_STATUS === "down" ? 
+          "<p style='color: red;'>⚠️ Immediate attention required!</p>" : 
+          "<p style='color: green;'>✅ Service has been restored</p>"}
+      `);
+      
+      await axios.post(
+        `https://api.mailgun.net/v3/${process.env.MAILGUN_DOMAIN}/messages`,
+        form,
+        {
+          auth: {
+            username: "api",
+            password: process.env.MAILGUN_API_KEY
+          },
+          headers: form.getHeaders()
+        }
+      );
+
+# Required GitHub Secrets for Mailgun:
+# - MAILGUN_API_KEY: Your Mailgun API key
+# - MAILGUN_DOMAIN: Your Mailgun domain (e.g., mg.patternsdigital.com)
+# - NOTIFICATION_EMAILS: Comma-separated email addresses to notify (e.g., admin@patternsdigital.com,team@patternsdigital.com)
+# - SITE_1_NAME, SITE_1_URL: First site details
+# - SITE_2_NAME, SITE_2_URL: Second site details
+# - SITE_3_NAME, SITE_3_URL: Third site details
+# - SITE_4_NAME, SITE_4_URL: Fourth site details
